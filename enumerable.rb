@@ -1,21 +1,37 @@
 module Enumerable
   def my_each
-    e = self.length - 1
+    var = self.to_a
+    e = var.size - 1
     if block_given?
       0.upto(e) do |x|
-        yield(self[x])
+        yield(var[x])
       end
     end
   end
 
   def my_each_with_index
-    e = self.length - 1
+    var = self.to_a
+    e = var.size - 1
     if block_given?
       0.upto(e) do |x|
-        yield(self[x],x)
+        yield(var[x],x)
       end
     end
   end
+
+  def my_select
+    var = self.to_a
+    e = var.size - 1
+    arr = []
+    if block_given?
+      0.upto(e) do |x|
+        if yield(var[x])
+          arr.push(var[x])
+        end
+      end
+    end
+    return arr
+  end
+
 end
 
-[].each_with_index {|i,j| puts i+ " ====> "+ j.to_s}
