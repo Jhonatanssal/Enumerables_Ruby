@@ -1,6 +1,5 @@
 module Enumerable
   def my_each
-    a = 0
     e = self.length - 1
     if block_given?
       0.upto(e) do |x|
@@ -9,5 +8,4 @@ module Enumerable
     end
   end
 
-  def 
 end
