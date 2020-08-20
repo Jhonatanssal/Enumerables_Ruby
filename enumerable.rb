@@ -18,4 +18,4 @@ module Enumerable
   end
 end
 
-%w(Ibrahimovic is better than Messi).my_each_with_index {|i,j| puts i+ " ====> "+ j.to_s}
+[].each_with_index {|i,j| puts i+ " ====> "+ j.to_s}
