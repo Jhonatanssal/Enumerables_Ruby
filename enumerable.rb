@@ -111,7 +111,8 @@ module Enumerable
     if input.nil? then var.length end
 
     var.my_each do |x|
-      if x == input then count += 1 end
+      # if x == input then count += 1 end
+      count += 1 if x == input
     end
     count
   end
@@ -124,13 +125,12 @@ module Enumerable
       var.my_each do |x|
         arr.push(yield(x))
       end
-      arr
     else
       var.my_each do |x|
         arr.push(proc[x]) if proc.is_a?(Proc)
       end
-      arr
     end
+    arr
   end
 
   def my_inject(*arg)
@@ -171,17 +171,8 @@ def multiply_els(arr)
   arr.my_inject(:*)
 end
 
-public 'my_each'
-public 'my_each_with_index'
-public 'my_all?'
-public 'my_any?'
-public 'my_none?'
-public 'my_count'
-public 'my_map'
-public 'my_inject'
-public 'my_inject'
-public 'multiply_els'
-public 'my_select'
+ary = [1, 2, 4, 2]
+puts ary.my_count(2)
 
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
