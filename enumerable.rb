@@ -1,3 +1,7 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
     var = to_a
@@ -14,7 +18,7 @@ module Enumerable
     var = to_a
     e = size - 1
     return unless block_given?
-    
+
     0.upto(e) do |x|
       yield(var[x], x)
     end
@@ -167,5 +171,19 @@ def multiply_els(arr)
   arr.my_inject(:*)
 end
 
-var = [1, 3.14, 42].my_none?(Float)
-print var
+public 'my_each'
+public 'my_each_with_index'
+public 'my_all?'
+public 'my_any?'
+public 'my_none?'
+public 'my_count'
+public 'my_map'
+public 'my_inject'
+public 'my_inject'
+public 'multiply_els'
+public 'my_select'
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
