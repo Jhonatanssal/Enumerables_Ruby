@@ -63,15 +63,15 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x]) then return true end
+        return true if yield(var[x])
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        if input === var[x] then return true end
+        return true if input === var[x]
       end
     else
       0.upto(e) do |x|
-        if var[x] then return true end
+        return true if var[x]
       end
     end
     false
@@ -106,7 +106,7 @@ module Enumerable
         count += 1 if yield(x)
       end
       return count
-    end    
+    end   
     return var.length if input.nil?
 
     var.my_each do |x|
@@ -168,7 +168,6 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
-
 
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
