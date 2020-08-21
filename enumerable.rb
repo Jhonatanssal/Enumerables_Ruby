@@ -26,7 +26,7 @@ module Enumerable
     arr = []
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) arr.push(self[x])
+        if yield(self[x]) { arr.push(self[x]) }
       end
     end
     arr
@@ -38,7 +38,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        unless yield(self[x]) return false
+        unless yield(self[x]) { return false }
       end
     end
     true
@@ -50,7 +50,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) return true
+        if yield(self[x]) { return true }
       end
     end
     false
@@ -62,7 +62,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) return false
+        if yield(self[x]) { return false }
       end
     end
     true
@@ -74,7 +74,7 @@ module Enumerable
 
     if block_given?
       self.my_each do |x|
-        if yield(x) count += 1
+        if yield(x) { count += 1 }
       end
       count
     end
@@ -133,6 +133,3 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
-
-print multiply_els([2, 4, 5])
-puts
