@@ -1,28 +1,28 @@
 module Enumerable
   def my_each
-    self.to_a
-    e = self.size - 1
+    var = to_a
+    e = size - 1
     return unless block_given?
 
     0.upto(e) do |x|
-      yield(self[x])
+      yield(var[x])
     end
-    self
+    var
   end
 
   def my_each_with_index
-    self.to_a
-    e = self.size - 1
+    var = to_a
+    e = size - 1
     return unless block_given?
     0.upto(e) do |x|
-      yield(self[x], x)
+      yield(var[x], x)
     end
-    self
+    var
   end
 
   def my_select
-    var = self.to_a
-    e = var.size - 1
+    var = to_a
+    e = size - 1
     arr = []
     if block_given?
       0.upto(e) do |x|
@@ -32,37 +32,61 @@ module Enumerable
     arr
   end
 
-  def my_all?
-    self.to_a
-    e = self.size - 1
+  def my_all?(input = nil)
+    var = to_a
+    e = size - 1
 
     if block_given?
       0.upto(e) do |x|
-        unless yield(self[x]) then false end
+        unless yield(var[x]) then return false end
+      end
+    elsif !input.nil?
+      0.upto(e) do |x|
+        unless input === var[x] then return false end
+      end
+    else
+      0.upto(e) do |x|
+        unless var[x] then return false end
       end
     end
     true
   end
 
-  def my_any?
-    self.to_a
-    e = self.size - 1
+  def my_any?(input = nil)
+    var = to_a
+    e = size - 1
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) then true end
+        if yield(var[x]) then return true end
+      end
+    elsif !input.nil?
+      0.upto(e) do |x|
+        if input === var[x] then return true end
+      end
+    else
+      0.upto(e) do |x|
+        if var[x] then return true end
       end
     end
     false
   end
 
-  def my_none?
-    self.to_a
-    e = self.size - 1
+  def my_none?(input = nil)
+    var = to_a
+    e = size - 1
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) then false end
+        if yield(var[x]) then return false end
+      end
+    elsif !input.nil?
+      0.upto(e) do |x|
+        if input === var[x] then return false end
+      end
+    else
+      0.upto(e) do |x|
+        if var[x] then return false end
       end
     end
     true
@@ -141,6 +165,3 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
-
-var = (1..10).my_select { |i|  i % 3 == 0 }
-print var
