@@ -110,4 +110,40 @@ module Enumerable
     return arr
   end
 
+  def my_inject(*arg)
+    var = self.to_a
+    b = var.size - 1
+
+    if block_given?
+      if arg.size == 0
+        acc = var[0]
+        1.upto(b) do |i|
+          acc = yield(acc, var[i])
+        end
+        return acc
+      elsif arg.size == 1
+        acc = arg[0]
+        0.upto(b) do |i|
+          acc = yield(acc, var[i])
+        end
+        return acc
+      end
+    else
+      if arg.size == 1
+        acc = var[0]
+        1.upto(b) do |i|
+          acc = acc.send(arg[0],var[i])
+        end
+        return acc
+      elsif arg.size == 2
+        acc = arg[0]
+        0.upto(b) do |i|
+          acc = acc.send(arg[1],var[i])
+        end
+        return acc
+      end
+    end
+  end
+
 end
+
