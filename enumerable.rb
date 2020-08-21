@@ -21,12 +21,12 @@ module Enumerable
   end
 
   def my_select
-    self.to_a
-    e = self.size - 1
+    var = self.to_a
+    e = var.size - 1
     arr = []
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) { arr.push(self[x]) }
+        if yield(var[x]) then arr.push(var[x]) end
       end
     end
     arr
@@ -38,7 +38,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        unless yield(self[x]) { return false }
+        unless yield(self[x]) then false end
       end
     end
     true
@@ -50,7 +50,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) { return true }
+        if yield(self[x]) then true end
       end
     end
     false
@@ -62,7 +62,7 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(self[x]) { return false }
+        if yield(self[x]) then false end
       end
     end
     true
@@ -74,26 +74,34 @@ module Enumerable
 
     if block_given?
       self.my_each do |x|
-        if yield(x) { count += 1 }
+        if yield(x) then count += 1 end
       end
       count
     end
     
-    if input.nil? return self.length
+    if input.nil? then self.length end
 
     self.my_each do |x|
-      if x == input { count += 1 }
+      if x == input then count += 1 end
     end
     count
   end
 
-  def my_map
-    var = self.to_a
+  def my_map(proc = nil)
+    self.to_a
     arr = []
-    var.my_each do |x|
-      arr.push(yield(x))
+
+    if block_given?
+      self.my_each do |x|
+        arr.push(yield(x))
+      end
+      return arr
+    else
+      self.my_each do |x|
+        arr.push(proc[x]) if proc.is_a?(Proc)
+      end
+      return arr
     end
-    arr
   end
 
   def my_inject(*arg)
@@ -133,3 +141,6 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
+
+var = (1..10).my_select { |i|  i % 3 == 0 }
+print var
