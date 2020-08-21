@@ -1,32 +1,34 @@
 module Enumerable
   def my_each
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     if block_given?
       0.upto(e) do |x|
-        yield(var[x])
+        yield(self[x])
       end
+      self
     end
   end
 
   def my_each_with_index
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     if block_given?
       0.upto(e) do |x|
-        yield(var[x],x)
+        yield(self[x],x)
       end
+      self
     end
   end
 
   def my_select
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     arr = []
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x])
-          arr.push(var[x])
+        if yield(self[x])
+          arr.push(self[x])
         end
       end
     end
@@ -34,12 +36,12 @@ module Enumerable
   end
 
   def my_all?
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     
     if block_given?
       0.upto(e) do |x|
-        unless yield(var[x])
+        unless yield(self[x])
           return false
         end
       end
@@ -48,12 +50,12 @@ module Enumerable
   end
 
   def my_any?
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x])
+        if yield(self[x])
           return true
         end
       end
@@ -62,12 +64,12 @@ module Enumerable
   end
 
   def my_none?
-    var = self.to_a
-    e = var.size - 1
+    self.to_a
+    e = self.size - 1
     
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x])
+        if yield(self[x])
           return false
         end
       end
@@ -76,11 +78,11 @@ module Enumerable
   end
 
   def my_count(input = nil)
-    var = self.to_a
+    self.to_a
     count = 0
     
     if block_given?
-      var.my_each do |x|
+      self.my_each do |x|
         if yield(x)
           count += 1 
         end
@@ -89,10 +91,10 @@ module Enumerable
     end
     
     if input.nil?
-      return var.length
+      return self.length
     end
 
-    var.my_each do |x| 
+    self.my_each do |x| 
       if x == input
         count += 1
       end
@@ -147,3 +149,9 @@ module Enumerable
 
 end
 
+def multiply_els(arr)
+  arr.my_inject(:*)
+end
+
+print multiply_els([2,4,5])
+puts
