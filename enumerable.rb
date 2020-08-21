@@ -14,6 +14,7 @@ module Enumerable
     var = to_a
     e = size - 1
     return unless block_given?
+    
     0.upto(e) do |x|
       yield(var[x], x)
     end
@@ -93,43 +94,43 @@ module Enumerable
   end
 
   def my_count(input = nil)
-    self.to_a
+    var = to_a
     count = 0
 
     if block_given?
-      self.my_each do |x|
+      var.my_each do |x|
         if yield(x) then count += 1 end
       end
       count
     end
     
-    if input.nil? then self.length end
+    if input.nil? then var.length end
 
-    self.my_each do |x|
+    var.my_each do |x|
       if x == input then count += 1 end
     end
     count
   end
 
   def my_map(proc = nil)
-    self.to_a
+    var = to_a
     arr = []
 
     if block_given?
-      self.my_each do |x|
+      var.my_each do |x|
         arr.push(yield(x))
       end
-      return arr
+      arr
     else
-      self.my_each do |x|
+      var.my_each do |x|
         arr.push(proc[x]) if proc.is_a?(Proc)
       end
-      return arr
+      arr
     end
   end
 
   def my_inject(*arg)
-    var = self.to_a
+    var = to_a
     b = var.size - 1
 
     if block_given?
@@ -165,3 +166,6 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
+
+var = [1, 3.14, 42].my_none?(Float)
+print var
