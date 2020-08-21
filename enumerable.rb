@@ -31,7 +31,7 @@ module Enumerable
     arr = []
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x]) then arr.push(var[x]) end
+        arr.push(var[x]) if yield(var[x])
       end
     end
     arr
@@ -43,15 +43,15 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        unless yield(var[x]) then return false end
+        return false unless yield(var[x])
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        unless input === var[x] then return false end
+        return false unless input === var[x]
       end
     else
       0.upto(e) do |x|
-        unless var[x] then return false end
+        return false unless var[x]
       end
     end
     true
@@ -83,15 +83,15 @@ module Enumerable
 
     if block_given?
       0.upto(e) do |x|
-        if yield(var[x]) then return false end
+        return false if yield(var[x])
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        if input === var[x] then return false end
+        return false if input === var[x]
       end
     else
       0.upto(e) do |x|
-        if var[x] then return false end
+        return false if var[x]
       end
     end
     true
@@ -103,15 +103,13 @@ module Enumerable
 
     if block_given?
       var.my_each do |x|
-        if yield(x) then count += 1 end
+        count += 1 if yield(x)
       end
-      count
-    end
-    
-    if input.nil? then var.length end
+      return count
+    end    
+    return var.length if input.nil?
 
     var.my_each do |x|
-      # if x == input then count += 1 end
       count += 1 if x == input
     end
     count
@@ -171,8 +169,6 @@ def multiply_els(arr)
   arr.my_inject(:*)
 end
 
-ary = [1, 2, 4, 2]
-puts ary.my_count(2)
 
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
