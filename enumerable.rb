@@ -75,6 +75,30 @@ module Enumerable
     return true
   end
 
-end
+  def my_count(input = nil)
+    var = self.to_a
+    count = 0
+    
+    if block_given?
+      var.my_each do |x|
+        if yield(x)
+          count += 1 
+        end
+      end
+      count
+    end
+    
+    if input.nil?
+      return var.length
+    end
 
-puts %w{ant bear cat ibrahimovic}.my_none? { |word| word.length >= 5 }
+    var.my_each do |x| 
+      if x == input
+        count += 1
+      end
+    end
+    count 
+
+  end
+
+end
