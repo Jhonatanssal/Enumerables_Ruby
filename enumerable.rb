@@ -101,4 +101,13 @@ module Enumerable
 
   end
 
+  def my_map
+    var = self.to_a
+    arr = []
+    var.my_each do |x|
+      arr.push(yield(x))
+    end
+    return arr
+  end
+
 end
