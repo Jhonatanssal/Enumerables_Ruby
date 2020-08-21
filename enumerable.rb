@@ -101,13 +101,63 @@ module Enumerable
 
   end
 
-  def my_map
+  def my_map(proc = nil)
     var = self.to_a
     arr = []
-    var.my_each do |x|
-      arr.push(yield(x))
+
+    if block_given?
+      var.my_each do |x|
+        arr.push(yield(x))
+      end
+      return arr
+    else
+      var.my_each do |x|
+        arr.push(proc[x]) if proc.is_a?(Proc)
+      end
+      return arr
     end
-    return arr
-  end 
+  end
+
+  def my_inject(*arg)
+    var = self.to_a
+    b = var.size - 1
+    
+    if block_given?
+      if arg.size == 0
+        acc = var[0]
+        1.upto(b) do |i|
+          acc = yield(acc, var[i])
+        end
+        return acc
+      elsif arg.size == 1
+        acc = arg[0]
+        0.upto(b) do |i|
+          acc = yield(acc, var[i])
+        end
+        return acc
+      end
+    else
+      if arg.size == 1
+        acc = var[0]
+        1.upto(b) do |i|
+          acc = acc.send(arg[0],var[i])
+        end
+        return acc
+      elsif arg.size == 2
+        acc = arg[0]
+        0.upto(b) do |i|
+          acc = acc.send(arg[1],var[i])
+        end
+        return acc
+      end
+    end
+  end
 
 end
+
+def multiply_els(arr)
+  arr.my_inject(:*)
+end
+
+square = Proc.new {|x| x ** 2 }
+print [1,3,4].my_map(square)
