@@ -1,7 +1,3 @@
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:disable Metrics/PerceivedComplexity
-# rubocop:enable Metrics/AbcSize
-# rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
     var = to_a
@@ -177,8 +173,3 @@ end
 def multiply_els(arr)
   arr.my_inject(:*)
 end
-
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/MethodLength
-# rubocop:enable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/PerceivedComplexity
