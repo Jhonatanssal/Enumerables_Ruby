@@ -37,6 +37,12 @@ module Enumerable
     arr
   end
 
+  def equl_type (a,input)
+    return a.is_a?(input) if input.is_a?(Class)
+    return a.match(input) if input.is_a?(Regexp)
+    return a==input
+  end
+
   def my_all?(input = nil)
     var = to_a
     e = size - 1
@@ -47,7 +53,7 @@ module Enumerable
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        return false unless input === var[x]
+        return false unless equl_type(var[x], input) #input === var[x]
       end
     else
       0.upto(e) do |x|
@@ -67,7 +73,7 @@ module Enumerable
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        return true if input === var[x]
+        return true if equl_type(var[x], input) #input === var[x]
       end
     else
       0.upto(e) do |x|
@@ -87,7 +93,7 @@ module Enumerable
       end
     elsif !input.nil?
       0.upto(e) do |x|
-        return false if input === var[x]
+        return false if equl_type(var[x], input) #input === var[x]
       end
     else
       0.upto(e) do |x|
@@ -165,9 +171,22 @@ module Enumerable
   end
 end
 
+module Enumerable
+  
+end
+
 def multiply_els(arr)
   arr.my_inject(:*)
 end
+
+puts %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+puts %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+puts %w{ant bear cat}.my_none?(/d/)                        #=> true
+puts [1, 3.14, 42].my_none?(Float)                         #=> false
+puts [].my_none?                                           #=> true
+puts [nil].my_none?                                        #=> true
+puts [nil, false].my_none?                                 #=> true
+puts [nil, false, true].my_none?                           #=> false
 
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
