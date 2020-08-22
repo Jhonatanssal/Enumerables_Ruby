@@ -1,6 +1,6 @@
-# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
-# rubocop:disable Metrics/AbcSize
+# rubocop:enable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
@@ -40,6 +40,7 @@ module Enumerable
   def equl_type(arg, input)
     return arg.is_a?(input) if input.is_a?(Class)
     return arg.match(input) if input.is_a?(Regexp)
+
     arg == input
   end
 
