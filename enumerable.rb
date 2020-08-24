@@ -2,35 +2,35 @@
 # rubocop:disable Metrics/MethodLength
 module Enumerable
   def my_each
+    return to_enum unless block_given?
+
     var = to_a
     e = size - 1
-    return unless block_given?
-
     0.upto(e) do |x|
       yield(var[x])
     end
-    var
+    self
   end
 
   def my_each_with_index
+    return to_enum unless block_given?
+
     var = to_a
     e = size - 1
-    return unless block_given?
-
     0.upto(e) do |x|
       yield(var[x], x)
     end
-    var
+    self
   end
 
   def my_select
+    return to_enum unless block_given?
+
     var = to_a
     e = size - 1
     arr = []
-    if block_given?
-      0.upto(e) do |x|
-        arr.push(var[x]) if yield(var[x])
-      end
+    0.upto(e) do |x|
+      arr.push(var[x]) if yield(var[x])
     end
     arr
   end
@@ -123,22 +123,25 @@ module Enumerable
   end
 
   def my_map(proc = nil)
+    return to_enum unless block_given?
+
     var = to_a
     arr = []
-
-    if block_given?
-      var.my_each do |x|
-        arr.push(yield(x))
-      end
-    else
+    unless proc.nil?
       var.my_each do |x|
         arr.push(proc[x]) if proc.is_a?(Proc)
       end
+    else
+      var.my_each do |x|
+        arr.push(yield(x))
+      end     
     end
     arr
   end
 
   def my_inject(*arg)
+    return yield false unless block_given? || !arg.empty? #(!block_given? && arg.empty?)
+
     var = to_a
     b = var.size - 1
 
