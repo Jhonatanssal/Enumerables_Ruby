@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/MethodLength
 module Enumerable
@@ -127,20 +128,20 @@ module Enumerable
 
     var = to_a
     arr = []
-    unless proc.nil?
+    if !proc.nil?
       var.my_each do |x|
         arr.push(proc[x]) if proc.is_a?(Proc)
       end
     else
       var.my_each do |x|
         arr.push(yield(x))
-      end     
+      end
     end
     arr
   end
 
   def my_inject(*arg)
-    return yield false unless block_given? || !arg.empty? #(!block_given? && arg.empty?)
+    return yield false unless block_given? || !arg.empty?
 
     var = to_a
     b = var.size - 1
@@ -179,5 +180,6 @@ def multiply_els(arr)
   arr.my_inject(:*)
 end
 
+# rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
 # rubocop:enable Metrics/MethodLength
