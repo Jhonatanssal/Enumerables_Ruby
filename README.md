@@ -45,7 +45,7 @@ Feel free to check the [issues page](https://github.com/jssarrazolaa/Enumerables
 
 # Show your support
 
-If you like our work, please give us a :+1:
+If you like our work, please give us a :star:
 
 # Acknowledgments
 
